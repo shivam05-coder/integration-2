@@ -3,8 +3,8 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 # Replace with your actual verify token and access token
-VERIFY_TOKEN = 'YOUR_VERIFY_TOKEN'
-ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'
+VERIFY_TOKEN = 'bfd48c141a66934a5c56b63fe5b5e175'
+ACCESS_TOKEN = 'EAALsfKGzNYgBO9Mo8OG8QOZC1KqzbXbw7KcqdQ6GOWYX2revtHu9TJf3cLj7dWgRWQo0iwt31amZBHc04KUeZBD4HmdrnI1ZBLzoI12guNtUU4PlF5ZCz43OIxLqPVq9LFgiW3WNvjRF5qLuOTAI2BrE0Pyq3bV8rYR4jrGIU2hhWTcBNbZC7ZAmgLuqtmntnj6KWGPAtOqeXUlIbNxyijNTMJ13wZDZD'
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
