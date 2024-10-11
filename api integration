@@ -1,0 +1,38 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Replace with your actual verify token and access token
+VERIFY_TOKEN = 'YOUR_VERIFY_TOKEN'
+ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'
+
+@app.route('/webhook', methods=['GET', 'POST'])
+def webhook():
+    if request.method == 'GET':
+        # Verify the webhook subscription
+        mode = request.args.get('hub.mode')
+        token = request.args.get('hub.verify_token')
+        challenge = request.args.get('hub.challenge')
+        if mode == 'subscribe' and token == VERIFY_TOKEN:
+            return challenge, 200
+        else:
+            return 'Unauthorized', 403
+    elif request.method == 'POST':
+        # Handle webhook events
+        data = request.get_json()
+        if data.get('object') == 'page':
+            for entry in data.get('entry'):
+                for change in entry.get('changes'):
+                    if change.get('field') == 'instagram_business_account':
+                        # Access the Instagram Business Account ID
+                        instagram_business_account_id = change.get('value', {}).get('id')
+                        # Now you can use this ID to make API calls to the Instagram Graph API
+                        # Example: Get the Instagram Business Account's profile
+                        # response = requests.get(f'https://graph.facebook.com/v17.0/{instagram_business_account_id}?fields=name,username,profile_picture_url&access_token={ACCESS_TOKEN}')
+                        # profile = response.json()
+                        # print(profile)
+                        break
+        return 'OK', 200
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
